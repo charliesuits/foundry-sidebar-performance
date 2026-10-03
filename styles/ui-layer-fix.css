@@ -1,0 +1,40 @@
+/* Sidebar Performance — every rule is gated by a body class set from the module's settings. */
+
+/* 1. Playlists: skip style/layout/paint for off-screen rows. Rows stay in the list and stay searchable. */
+body.slf-playlists #sidebar .playlists-sidebar .sound,
+body.slf-playlists #sidebar .directory-list .sound {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 28px;
+}
+body.slf-playlists #sidebar .playlists-sidebar .directory-item,
+body.slf-playlists #sidebar .playlists-sidebar .playlist {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 40px;
+}
+body.slf-playlists #sidebar .playlists-sidebar .sound { contain: layout paint; }
+/* Fixed-width timestamps so 0:09 -> 0:10 doesn't resize the row. */
+body.slf-playlists #sidebar .current,
+body.slf-playlists #sidebar .duration {
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+  min-width: 4.5ch;
+  text-align: right;
+}
+
+/* 2. Keep sidebar repaints on their own layer (will-change: opacity doesn't create a containing block). */
+body.slf-layers #sidebar,
+body.slf-layers #ui-right { will-change: opacity; }
+
+/* 3. Other sidebar directories. */
+body.slf-directories #sidebar .directory-list > li,
+body.slf-directories #sidebar .directory-item {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 32px;
+}
+
+/* 4. Chat log. */
+body.slf-chat #chat-log .chat-message,
+body.slf-chat #chat .chat-message {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 90px;
+}
